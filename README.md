@@ -3,3 +3,6 @@
 
 # Script
 [Python script](preuba/Constructor.py)
+
+# Kicad library
+[Zynq-UltraScale library](preuba/ZynqUltra.lib)
