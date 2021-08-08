@@ -11,8 +11,8 @@ cont=os.listdir('./zupall/')
 #limite de contador
 p=0
 for archivo in cont:
-   # if p==15:
-     #   break
+    if p==2:
+        break
     #if archivo=="xczu9cgffvc900pkg.csv" or archivo=="xqzu9egffrc900pkg.csv":
     #    pass
     if archivo[-4:]== '.csv':
@@ -298,9 +298,38 @@ f=open("ZynqUltra.lib", "w")
 wr="EESchema-LIBRARY Version 2.4 \n#encoding utf-8"
 
 #print(dat)
+
 j=0
 for i in zynq:
+    p=""
+    cont=0
+    flag=0
+    y=0
+    i=i[:-3]
     print(i)
+    for lh in range(len(i)):
+        print(i[lh])
+        if i[lh].isnumeric():
+            flag=1
+           # print("FLAG")
+        if flag==1:
+           # print("entro")
+            #print(not(i[lh].isnumeric))
+            if not(i[lh].isnumeric)== False:
+                cont+=1
+                print("cont: ", cont)
+        if cont>2 and y==0:
+            #if y==0:
+            y=1
+            # print("dentro")
+            p+="-"+i[lh]
+            flag=0
+        else:
+          #  print("Restante")
+            p+=i[lh]
+        print(p)
+
+    print(p)
     pin, pin_nam, bank=leer_pines(j)
     lista, capas=listado(pin, pin_nam, bank)
    # print(capas)
