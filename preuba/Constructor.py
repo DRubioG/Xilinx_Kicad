@@ -11,8 +11,8 @@ cont=os.listdir('./zupall/')
 #limite de contador
 p=0
 for archivo in cont:
-    if p==2:
-        break
+   # if p==2:
+    #    break
     #if archivo=="xczu9cgffvc900pkg.csv" or archivo=="xqzu9egffrc900pkg.csv":
     #    pass
     if archivo[-4:]== '.csv':
@@ -306,18 +306,20 @@ for i in zynq:
     flag=0
     y=0
     i=i[:-3]
-    print(i)
+  #  print(i)
     for lh in range(len(i)):
-        print(i[lh])
+       # print("letra ->", i[lh])
         if i[lh].isnumeric():
             flag=1
            # print("FLAG")
         if flag==1:
-           # print("entro")
-            #print(not(i[lh].isnumeric))
-            if not(i[lh].isnumeric)== False:
+        #    print("\t\t\tflag -> 1")
+        #    print((i[lh].isalpha()))
+            if (i[lh].isalpha())== True:
                 cont+=1
-                print("cont: ", cont)
+       #         print("i[lh]: ", i[lh])
+      #          print("cont: ", cont)
+
         if cont>2 and y==0:
             #if y==0:
             y=1
@@ -327,18 +329,20 @@ for i in zynq:
         else:
           #  print("Restante")
             p+=i[lh]
-        print(p)
+     #   print("nombre actual -> ", p)
+       # print("--------------------------------")
 
+   # print("nombre final->", p)
     print(p)
     pin, pin_nam, bank=leer_pines(j)
     lista, capas=listado(pin, pin_nam, bank)
    # print(capas)
     dat=-int(longitud()*50+150)
-    wr+="\n#\n# "+i+"\n#"
-    wr+="\nDEF "+i.upper()+" U 0 40 Y Y "+str(capas)+" L N"
+    wr+="\n#\n# "+p+"\n#"
+    wr+="\nDEF "+p.upper()+" U 0 40 Y Y "+str(capas)+" L N"
     #print("numero de bancos: ", num_capas())
     wr+="\nF0  \"U\" -550 "+str(-3000-100)+" 50 H V C CNN" #posicion del identificador
-    wr+="\nF1  \""+ i.upper() +"\" -450 "+str(3100)+" 50 H V C CNN" #posicion del nombre del simbolo
+    wr+="\nF1  \""+ p.upper() +"\" -450 "+str(3100)+" 50 H V C CNN" #posicion del nombre del simbolo
     wr+="\nF2  \"\" 0 "+str(3000)+" 50 H I C CNN"
     wr+="\nF3  \"\" 0 "+str(3000)+" 50 H I C CNN"
     wr+="\nDRAW"
