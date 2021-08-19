@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name ZynqUltra)(type Legacy)(uri ${KIPRJMOD}/ZynqUltra.lib)(options "")(descr ""))
+  (lib (name Versal)(type Legacy)(uri ${KIPRJMOD}/Versal.lib)(options "")(descr ""))
 )

@@ -5,14 +5,14 @@ import os
 #leer todos loss archivos
 zynq_nam=[]
 zynq=[]
-cont=os.listdir('./zupall/')
+cont=os.listdir('versal-all')#./zupall/')
 
 
 #limite de contador
 p=0
 for archivo in cont:
-   # if p==2:
-    #    break
+   # if p==3:
+   #     break
     #if archivo=="xczu9cgffvc900pkg.csv" or archivo=="xqzu9egffrc900pkg.csv":
     #    pass
     if archivo[-4:]== '.csv':
@@ -28,7 +28,7 @@ bank=[]
 def leer_pines(k):
     cont=0
     ##Extraer nombre de pines, número y banco
-    path='./zupall/' + zynq_nam[k]
+    path='./versal-all/'+ zynq_nam[k] #'./zupall/' + zynq_nam[k]
     with open(path)  as csvarchivos:
         entrada=csv.reader(csvarchivos)
         lista=[]
@@ -292,7 +292,7 @@ def longitud():
 
 
 #apertura de fichero
-f=open("ZynqUltra.lib", "w")
+f=open("Versal.lib", "w") #"ZynqUltra.lib", "w")
 
 
 wr="EESchema-LIBRARY Version 2.4 \n#encoding utf-8"
@@ -352,6 +352,7 @@ for i in zynq:
     wr+="\nENDDRAW"
     wr+="\nENDDEF"
     j=j+1
+print(j)
 wr+="\n#\n#End library"
 #Escritura
 f.write(wr)
