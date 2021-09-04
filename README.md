@@ -8,4 +8,4 @@
 [Zynq-UltraScale library](preuba/ZynqUltra.lib)
 
 # KiCad footprints
-![Zynq-UltraScale footprints](preuba/Xilinx_Zynq_UltraScale+.pretty/)
+[Zynq-UltraScale footprints](preuba/Xilinx_Zynq_UltraScale+.pretty/)
