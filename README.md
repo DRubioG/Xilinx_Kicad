@@ -7,5 +7,8 @@
 # Kicad library
 [Zynq-UltraScale library](preuba/ZynqUltra.lib)
 
-# KiCad footprints
+# Zynq_UltraScale+ footprints
 [Zynq-UltraScale footprints](preuba/Xilinx_Zynq_UltraScale+.pretty/)
+
+# UltraScale & UltraScale footprints
+[UltraScale & UltraScale footprints](preuba/UltraScale_&_UltraScale+.pretty/)
