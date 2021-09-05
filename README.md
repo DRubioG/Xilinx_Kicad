@@ -11,4 +11,7 @@
 [Zynq-UltraScale footprints](preuba/Xilinx_Zynq_UltraScale+.pretty/)
 
 # UltraScale & UltraScale footprints
-[UltraScale & UltraScale footprints](preuba/UltraScale_&_UltraScale+.pretty/)
+[UltraScale & UltraScale footprints](preuba/Xilinx_UltraScale_&_UltraScale+.pretty/)
+
+# Versal footprints
+[Versal footprints](preuba/Xilinx_Versal.pretty/)
