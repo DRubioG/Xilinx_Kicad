@@ -56,6 +56,33 @@ def get_pins(zynq_name):
 
 
 def listado(pines):
+    pin_bank_ant = ""
+    new_bank = 0
+    pin_bank = []
+    cont = -1
+    pines = sorted(pines, key=itemgetter(2))
+
+    for pin in pines:
+        if pin[1][-len(pin[2]):] == pin[2]:
+            pin[1] = pin[1][:-(len(pin[2])+1)]
+
+        if pin[2] != pin_bank_ant:
+            new_bank = 1
+            cont += 1
+        if new_bank == 1:
+            pin_bank.append([pin])
+            new_bank = 0
+        else:
+            pin_bank[cont].append(pin)
+        pin_bank_ant = pin[2]
+
+    cont = -1
+    for list in pin_bank:
+        lon = len(list)
+        if lon >= 100:
+            pass
+
+
 
     return lista, capas
 
