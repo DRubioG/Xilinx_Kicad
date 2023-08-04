@@ -1,5 +1,8 @@
 (sym_lib_table
-  (lib (name ZynqUltra)(type Legacy)(uri ${KIPRJMOD}/ZynqUltra.lib)(options "")(descr ""))
-  (lib (name Versal)(type Legacy)(uri ${KIPRJMOD}/Versal.lib)(options "")(descr ""))
-  (lib (name bss138)(type Legacy)(uri ${ESCRITORIO}/bss138.lib)(options "")(descr ""))
+  (version 7)
+  (lib (name "ZynqUltra")(type "Legacy")(uri "${KIPRJMOD}/ZynqUltra.lib")(options "")(descr ""))
+  (lib (name "Versal")(type "Legacy")(uri "${KIPRJMOD}/Versal.lib")(options "")(descr ""))
+  (lib (name "bss138")(type "Legacy")(uri "${ESCRITORIO}/bss138.lib")(options "")(descr ""))
+  (lib (name "prueba")(type "KiCad")(uri "${KIPRJMOD}/prueba.kicad_sym")(options "")(descr ""))
+  (lib (name "Zynq_Ultrascale+")(type "KiCad")(uri "/home/dxd/Documentos/GitHub/Xilinx_Kicad/Zynq_Ultrascale+.kicad_sym")(options "")(descr ""))
 )
