@@ -129,13 +129,15 @@ def listado(pines):
     return pin_bank3
     # return lista, capas
 
-def generador_pines(pins):
-    
+def generador_pines(pins, name):
+    wr = ""
+    cont = 0
 
     for pin in pins:
         lon = int(len(pin)/2)
         mitad = 0
         max = 0
+        cont += 1
 
         if lon >= 75:
             mitad = 1
@@ -155,37 +157,38 @@ def generador_pines(pins):
         else:
             u = lon*100+200
         
-
+        wr += "    (symbol \"" + name + "_" + str(cont) + "_1\" \n"
         # agregar rectangulo
         wr += create_square((str(x), str(u)), (str(-x), str(-u)))
 
         # agregar pines
-        for i in pin:
+        # for i in pin:
 
-            wr += create_pin(i)
+        #     wr += create_pin(i)
 
+        wr += "    )\n"
 
-    pass
+    return wr
 
 def create_pin(name, number, bank):
-    wr = "\t\t\t(pin " 
+    wr = "      (pin " 
     #tipo de pin
     wr += tipo 
     #posicion
     wr += " line (at " + pos_x + " " + pos_y + " " + dir + ") (length 2.54)"
     #nombre
-    wr += "\t\t\t\t(name \"" + name + "\" (effects (font (size 1.27 1.27))))\n"
+    wr += "        (name \"" + name + "\" (effects (font (size 1.27 1.27))))\n"
     #numero
-    wr += "\t\t\t\t(name \"" + number + "\" (effects (font (size 1.27 1.27))))\n"
-    wr += "\t\t\t)\n"
+    wr += "        (name \"" + number + "\" (effects (font (size 1.27 1.27))))\n"
+    wr += "      )\n"
     return wr
 
 def create_square(p1_pos, p2_pos):
 
-    wr = "\t\t\t(rectangle (start " + p1_pos[0] + " " + p1_pos[1] + ") \
-        (end " + p2_pos[0] + " " + p2_pos[1] + ")\n\
-            \t\t\t\t(stroke (width 0) (type default))\n\
-            \t\t\t\t(fill (type none))\n\t\t\t)\n"
+    wr = "      (rectangle (start " + p1_pos[0] + " " + p1_pos[1] + ")"
+    wr += "(end " + p2_pos[0] + " " + p2_pos[1] + ")\n"
+    wr += "        (stroke (width 0) (type default))\n"
+    wr += "        (fill (type none))\n      )\n"
 
     return wr
 
@@ -193,19 +196,20 @@ def create_text(text):
     pos = (a,b)
 
     wr = "(text \""+ text + "\" (at " + pos[0] + " " + pos[1] + " 0)\n\
-        \t\t\t\t(effects (font (size 1.27 1.27)))\n\t\t\t)"
+                (effects (font (size 1.27 1.27)))\n      )"
     
     return wr
 
 if __name__=="__main__":
-    files = os.listdir('./chips/zupall/')
+    files = os.listdir('./chips/zupall')
 
     zynq_nam = get_files(files)
 
-    f = open("Zynq_Ultrascale+.kicad_sym", "w")
+    f = open("./kicad_test/Zynq_Ultrascale+.kicad_sym", "w")
 
     wr = "(kicad_symbol_lib (version 20220914) (generator kicad_symbol_editor)\n"
 
+    cont = 0
     for chip in zynq_nam:
         name = get_name(chip)
 
@@ -213,25 +217,31 @@ if __name__=="__main__":
 
         lista = listado(pines)
         
+        name = name.upper()
 
-        wr += "\t(symbol \"" + name + "\" (in_bom yes) (on_board yes)  \
-\t\t(property \"Reference\" \"U\" (at 0 0 0)\n \
-\t\t(effects (font (size 1.27 1.27)))\n \
-\t\t)\n \
-\t\t(property \"Value\" \"\" (at 0 0 0)\n \
-\t\t\t(effects (font (size 1.27 1.27)))\n \
-\t\t)\n \
-\t\t(property \"Footprint\" \"\" (at 0 0 0)\n \
-\t\t\t(effects (font (size 1.27 1.27)) hide)\n \
-\t\t)\n \
-\t\t(property \"Datasheet\" \"\" (at 0 0 0)\n \
-\t\t\t(effects (font (size 1.27 1.27)) hide)\n \
-\t\t)\n \
-\t\t(property \"ki_locked\" \"\" (at 0 0 0)\n \
-\t\t\t(effects (font (size 1.27 1.27)))\n \
-\t\t)\n"
-# \t\t(symbol \"" + name + "_" + capa + "_1\" 
-        wr += generador_pines(lista)
-    wr += "\t)\n)"
-
+        wr += "  (symbol \"" + name + "\" (in_bom yes) (on_board yes)\n"
+        wr += "    (property \"Reference\" \"U\" (at 0 0 0)\n"
+        wr += "      (effects (font (size 1.27 1.27)))\n"
+        wr += "    )\n"
+        wr += "    (property \"Value\" \"\" (at 0 0 0)\n"
+        wr += "      (effects (font (size 1.27 1.27)))\n"
+        wr += "    )\n"
+        wr += "    (property \"Footprint\" \"\" (at 0 0 0)\n"
+        wr += "      (effects (font (size 1.27 1.27)) hide)\n" 
+        wr += "    )\n"
+        wr += "    (property \"Datasheet\" \"\" (at 0 0 0)\n"
+        wr += "      (effects (font (size 1.27 1.27)) hide)\n" 
+        wr += "    )\n"
+        wr += "    (property \"ki_locked\" \"\" (at 0 0 0)\n"
+        wr += "      (effects (font (size 1.27 1.27)))\n"
+        wr += "    )\n"
+#     (symbol \"" + name + "_" + capa + "_1\" 
+        wr += generador_pines(lista, name)
+        wr += "  )\n"
+        # cont += 1
+        # if cont ==23:
+        #     break
+        
+    wr += ")"
+    f.write(wr)
     f.close()
