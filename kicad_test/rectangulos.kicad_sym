@@ -55,6 +55,10 @@
         (stroke (width 0) (type default))
         (fill (type none))
       )
+      (pin "no_connect" line (at -5.08 5.08 0) (length 2.54)
+        (name "erer" (effects (font (size 1.27 1.27))))
+        (number "" (effects (font (size 1.27 1.27))))
+      )
     )
     (symbol "hola_2_1"
       (rectangle (start -1.27 3.81) (end 2.54 2.54)

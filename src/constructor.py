@@ -162,6 +162,7 @@ def generador_pines(pins, name):
         wr += create_square((str(x), str(u)), (str(-x), str(-u)))
 
         # agregar pines
+        wr += create_pin(pin)
         # for i in pin:
 
         #     wr += create_pin(i)
@@ -170,17 +171,39 @@ def generador_pines(pins, name):
 
     return wr
 
-def create_pin(name, number, bank):
-    wr = "      (pin " 
-    #tipo de pin
-    wr += tipo 
-    #posicion
-    wr += " line (at " + pos_x + " " + pos_y + " " + dir + ") (length 2.54)"
-    #nombre
-    wr += "        (name \"" + name + "\" (effects (font (size 1.27 1.27))))\n"
-    #numero
-    wr += "        (name \"" + number + "\" (effects (font (size 1.27 1.27))))\n"
-    wr += "      )\n"
+bidirec=["PS_MIO", "IO_", "PS_DDR_DQS_N", "PS_DDR_DQS_P", "DONE", "INIT_B", "PS_DDR_DQ", "T0_DQS", "T1_DQS", "T2_DQS", "T3_DQS"]
+power=["VCC", "PS_MIO_V", "GND", "PS_DDR_VREF", "VREF"]
+output=["TDO", "PS_DDR_CKP", "PS_DDR_CKN", "PS_DDR_CKE", "PS_DDR_CS_B", "PS_DDR_RAS_B", "PS_DDR_CAS_B", "PS_DDR_WE_B", "PS_DDR_BA", "PS_DDR_A", "PS_DDR_ODT", "PS_DDR_DRST_B", "PS_DDR_DM", "PS_DDR_VRP", "PS_DDR_VRN", \
+    "MGTXTXP", "MGTPTXP", "MGTXTXN", "MGTPTXN",]
+
+def create_pin(pin_list):
+    wr = ""
+    for pin in pin_list:
+        tipo = "input"
+        name = pin[1]
+        number = pin[0]
+        wr += "      (pin " 
+        #tipo de pin
+        for b in bidirec:
+            if pin[1][:len(b)] == b:
+                tipo = "bidirectional"
+        for p in power:
+            if pin[1][:len(p)] == p:
+                tipo = "power_in"
+        for o in power:
+            if pin[1][:len(o)] == o:
+                tipo = "power_in"
+        if pin[1] == "NC":
+            tipo = "no_connect"
+        wr += tipo 
+        #posicion
+        dir = 0
+        wr += " line (at " + str(100) + " " + str(100) + " " + str(dir) + ") (length 2.54)\n"
+        #nombre
+        wr += "        (name \"" + name + "\" (effects (font (size 1.27 1.27))))\n"
+        #numero
+        wr += "        (number \"" + number + "\" (effects (font (size 1.27 1.27))))\n"
+        wr += "      )\n"
     return wr
 
 def create_square(p1_pos, p2_pos):
