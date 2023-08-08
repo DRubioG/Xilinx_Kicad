@@ -2,4 +2,6 @@
   (version 7)
   (lib (name "Package_Xilinx")(type "KiCad")(uri "${KIPRJMOD}/Package_Xilinx.pretty")(options "")(descr ""))
   (lib (name "Package_Xilinx_UltraScale")(type "KiCad")(uri "${KIPRJMOD}/Package_Xilinx_UltraScale.pretty")(options "")(descr ""))
+  (lib (name "Packag")(type "KiCad")(uri "${KIPRJMOD}/Packag.pretty")(options "")(descr ""))
+  (lib (name "Package_Xilinx_Versal")(type "KiCad")(uri "${KIPRJMOD}/Package_Xilinx_Versal.pretty")(options "")(descr ""))
 )
