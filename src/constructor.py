@@ -224,7 +224,7 @@ def create_text(text):
     return wr
 
 if __name__=="__main__":
-    files = os.listdir('./chips/zupall')
+    files = os.listdir('../chips/zupall')
 
     zynq_nam = get_files(files)
 
