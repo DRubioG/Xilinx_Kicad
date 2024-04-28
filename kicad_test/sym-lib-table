@@ -1,5 +1,4 @@
 (sym_lib_table
   (version 7)
-  (lib (name "prueba")(type "KiCad")(uri "${KIPRJMOD}/prueba.kicad_sym")(options "")(descr ""))
   (lib (name "Zynq_Ultrascale+")(type "KiCad")(uri "${KIPRJMOD}/Zynq_Ultrascale+.kicad_sym")(options "")(descr ""))
 )

@@ -129,47 +129,29 @@ def listado(pines):
     return pin_bank3
     # return lista, capas
 
-def generador_pines(pins, name):
+
+
+
+def generador(pins, name):
     wr = ""
     cont = 0
 
     for pin in pins:
-        lon = int(len(pin)/2)
-        mitad = 0
-        max = 0
         cont += 1
-
-        if lon >= 75:
-            mitad = 1
-
-        for l in pin:
-            rt = len(l[1])
-            if rt > max:
-                max = rt
-
-        if max < 19:
-            x = 650 -200      # check this numbers
-        else:
-            x = 1000    #check this numbers
-        
-        if mitad == 1:
-            u = int(lon/2)*100+200
-        else:
-            u = lon*100+200
-        
-        wr += "    (symbol \"" + name + "_" + str(cont) + "_1\" \n"
+        wr += "\n\t\t(symbol \"" + name + "_" + str(cont) + "_1\""
         # agregar rectangulo
-        wr += create_square((str(x), str(u)), (str(-x), str(-u)))
+        wr += create_square(pin)
 
         # agregar pines
         wr += create_pin(pin)
-        # for i in pin:
 
-        #     wr += create_pin(i)
 
-        wr += "    )\n"
+        wr += "\n\t\t)"
 
     return wr
+
+
+
 
 bidirec=["PS_MIO", "IO_", "PS_DDR_DQS_N", "PS_DDR_DQS_P", "DONE", "INIT_B", "PS_DDR_DQ", "T0_DQS", "T1_DQS", "T2_DQS", "T3_DQS"]
 power=["VCC", "PS_MIO_V", "GND", "PS_DDR_VREF", "VREF"]
@@ -177,12 +159,16 @@ output=["TDO", "PS_DDR_CKP", "PS_DDR_CKN", "PS_DDR_CKE", "PS_DDR_CS_B", "PS_DDR_
     "MGTXTXP", "MGTPTXP", "MGTXTXN", "MGTPTXN",]
 
 def create_pin(pin_list):
+    """
+    crear pines
+    """
+
     wr = ""
     for pin in pin_list:
         tipo = "input"
         name = pin[1]
         number = pin[0]
-        wr += "      (pin " 
+        wr += "\n\t\t\t(pin " 
         #tipo de pin
         for b in bidirec:
             if pin[1][:len(b)] == b:
@@ -197,21 +183,83 @@ def create_pin(pin_list):
             tipo = "no_connect"
         wr += tipo 
         #posicion
-        dir = 0
-        wr += " line (at " + str(100) + " " + str(100) + " " + str(dir) + ") (length 2.54)\n"
+
+
+        dir = 180
+        wr += " line"
+        wr += "\n\t\t\t\t(at " + str(10) + " " + str(10) + " " + str(dir) + ")"
+        wr += "\n\t\t\t\t(length 3.81)\n"
         #nombre
-        wr += "        (name \"" + name + "\" (effects (font (size 1.27 1.27))))\n"
+        wr += "\n\t\t\t\t(name \"" + name + "\""
+        wr += "\n\t\t\t\t\t(effects"
+        wr += "\n\t\t\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t\t\t)"
+        wr += "\n\t\t\t\t\t)"
+        wr += "\n\t\t\t\t)"
         #numero
-        wr += "        (number \"" + number + "\" (effects (font (size 1.27 1.27))))\n"
-        wr += "      )\n"
+        wr += "\n\t\t\t\t(number \"" + number + "\""
+        wr += "\n\t\t\t\t\t(effects"
+        wr += "\n\t\t\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t\t\t)"
+        wr += "\n\t\t\t\t\t)"
+        wr += "\n\t\t\t\t)"
+        wr += "\n\t\t\t)"
     return wr
 
-def create_square(p1_pos, p2_pos):
+def create_square(pin):
+    """
+    crear rectangulo
+    """
+    max = 0
 
-    wr = "      (rectangle (start " + p1_pos[0] + " " + p1_pos[1] + ")"
-    wr += "(end " + p2_pos[0] + " " + p2_pos[1] + ")\n"
-    wr += "        (stroke (width 0) (type default))\n"
-    wr += "        (fill (type none))\n      )\n"
+    # calculo del rectangulo
+    #dimensiones
+    for l in pin:
+        rt = len(l[1])
+        if rt > max:
+            max = rt
+
+    if max < 19:
+        x = 10       # check this numbers
+    else:
+        x = max    #check this numbers
+    
+
+    #calculo de la otra mitad, para añadir el otro lado
+    lon = int(len(pin)/2)   # encima/debajo cero
+    mitad = 0
+
+    if lon >= 75:
+        mitad = 1
+
+    if mitad == 1:  #izda/dcha
+        h = int(lon/2)*100+200
+    else:
+        h = 20
+
+    # agregar rectangulo
+    p1_pos = (x, h)
+    if mitad == 1:
+        p2_pos = (-x, -h)
+    else:
+        p2_pos = (-x, 0)
+    
+    
+    p2_pos = (-x, -h)
+
+    wr = "\n\t\t\t(rectangle"
+    wr += "\n\t\t\t\t(start " + p1_pos[0] + " " + p1_pos[1] + ")"
+    wr += "\n\t\t\t\t(end " + p2_pos[0] + " " + p2_pos[1] + ")"
+    wr += "\n\t\t\t\t(stroke"
+    wr += "\n\t\t\t\t\t(width 0)"
+    wr += "\n\t\t\t\t\t(type default)"
+    wr += "\n\t\t\t\t)"
+    wr += "\n\t\t\t\t(fill"
+    wr += "\n\t\t\t\t\t(type none)"
+    wr += "\n\t\t\t\t)"
+    wr += "\n\t\t\t)"
 
     return wr
 
@@ -224,13 +272,16 @@ def create_text(text):
     return wr
 
 if __name__=="__main__":
-    files = os.listdir('../chips/zupall')
+    files = os.listdir('./chips/zupall')
 
     zynq_nam = get_files(files)
 
     f = open("./kicad_test/Zynq_Ultrascale+.kicad_sym", "w")
 
-    wr = "(kicad_symbol_lib (version 20220914) (generator kicad_symbol_editor)\n"
+    wr = "(kicad_symbol_lib"
+    wr += "\n\t(version 20231120)"
+    wr += "\n\t(generator \"kicad_symbol_editor\")"
+    wr += "\n\t(generator_version \"8.0\")"
 
     cont = 0
     for chip in zynq_nam:
@@ -242,28 +293,66 @@ if __name__=="__main__":
         
         name = name.upper()
 
-        wr += "  (symbol \"" + name + "\" (in_bom yes) (on_board yes)\n"
-        wr += "    (property \"Reference\" \"U\" (at 0 0 0)\n"
-        wr += "      (effects (font (size 1.27 1.27)))\n"
-        wr += "    )\n"
-        wr += "    (property \"Value\" \"\" (at 0 0 0)\n"
-        wr += "      (effects (font (size 1.27 1.27)))\n"
-        wr += "    )\n"
-        wr += "    (property \"Footprint\" \"\" (at 0 0 0)\n"
-        wr += "      (effects (font (size 1.27 1.27)) hide)\n" 
-        wr += "    )\n"
-        wr += "    (property \"Datasheet\" \"\" (at 0 0 0)\n"
-        wr += "      (effects (font (size 1.27 1.27)) hide)\n" 
-        wr += "    )\n"
-        wr += "    (property \"ki_locked\" \"\" (at 0 0 0)\n"
-        wr += "      (effects (font (size 1.27 1.27)))\n"
-        wr += "    )\n"
-#     (symbol \"" + name + "_" + capa + "_1\" 
-        wr += generador_pines(lista, name)
+        wr += "\n\t(symbol \"" + name + "\""
+        wr += "\n\t\t(exclude_from_sim yes)"
+        wr += "\n\t\t(in_bom yes)"
+        wr += "\n\t\t(on_board yes)"
+        wr += "\n\t\t(property \"Reference\" \"U\""
+        wr += "\n\t\t\t(at 0 0 0)"
+        wr += "\n\t\t\t(effects"
+        wr += "\n\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t)"
+        wr += "\n\t\t\t)"
+        wr += "\n\t\t)"
+        wr += "\n\t\t(property \"Value\" \"\" "
+        wr += "\n\t\t\t(at 0 0 0)"
+        wr += "\n\t\t\t(effects"
+        wr += "\n\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t)"
+        wr += "\n\t\t\t)"
+        wr += "\n\t\t)"
+        wr += "\n\t\t(property \"Footprint\" \"\" "
+        wr += "\n\t\t\t(at 0 0 0)"
+        wr += "\n\t\t\t(effects"
+        wr += "\n\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t)"
+        wr += "\n\t\t\t)"
+        wr += "\n\t\t)"
+        wr += "\n\t\t(property \"Datasheet\" \"\" "
+        wr += "\n\t\t\t(at 0 0 0)"
+        wr += "\n\t\t\t(effects"
+        wr += "\n\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t)"
+        wr += "\n\t\t\t)"
+        wr += "\n\t\t)"
+        wr += "\n\t\t(property \"Description\" \"\" "
+        wr += "\n\t\t\t(at 0 0 0)"
+        wr += "\n\t\t\t(effects"
+        wr += "\n\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t)"
+        wr += "\n\t\t\t)"
+        wr += "\n\t\t)"
+        wr += "\n\t\t(property \"ki_locked\" \"\" "
+        wr += "\n\t\t\t(at 0 0 0)"
+        wr += "\n\t\t\t(effects"
+        wr += "\n\t\t\t\t(font"
+        wr += "\n\t\t\t\t\t(size 1.27 1.27)"
+        wr += "\n\t\t\t\t)"
+        wr += "\n\t\t\t)"
+        wr += "\n\t\t)"
+        
+        
+
+        wr += generador(lista, name)
         wr += "  )\n"
-        # cont += 1
-        # if cont ==23:
-        #     break
+        cont += 1
+        if cont == 1:
+            break
         
     wr += ")"
     f.write(wr)
