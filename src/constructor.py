@@ -3,7 +3,6 @@ from operator import itemgetter
 import os
 
 def get_files(files):
-    zynq = []
     zynq_nam = list()
     for file in files:
         if file[-4:] == '.csv':
@@ -162,8 +161,13 @@ def create_pin(pin_list):
     """
     crear pines
     """
-
+    mitad = 0
+    cont = 0
     wr = ""
+    lon = len(pin_list)
+    if lon > 20:
+        mitad = 1
+
     for pin in pin_list:
         tipo = "input"
         name = pin[1]
@@ -183,12 +187,25 @@ def create_pin(pin_list):
             tipo = "no_connect"
         wr += tipo 
         #posicion
+        if mitad == 1:
+            if cont <= lon/2:
+                pos_y = (int(lon/4) - int(cont))*1.27*2
+            else:
+                pos_y = (int(lon/4) - int(cont-lon/2))*1.27*2
+        else:
+            pos_y = (int(lon/2) - int(cont))*1.27*2
 
-
-        dir = 180
+        cont += 1
+        if mitad == 1:
+            if cont <= lon:
+                dir = 180
+            else:
+                dir = 0
+        else:
+            dir = 180
         wr += " line"
-        wr += "\n\t\t\t\t(at " + str(10) + " " + str(10) + " " + str(dir) + ")"
-        wr += "\n\t\t\t\t(length 3.81)\n"
+        wr += "\n\t\t\t\t(at " + str(10) + " " + str(pos_y) + " " + str(dir) + ")"
+        wr += "\n\t\t\t\t(length " +  str(1.27*4) +")\n"
         #nombre
         wr += "\n\t\t\t\t(name \"" + name + "\""
         wr += "\n\t\t\t\t\t(effects"
@@ -244,14 +261,13 @@ def create_square(pin):
     if mitad == 1:
         p2_pos = (-x, -h)
     else:
-        p2_pos = (-x, 0)
+        p2_pos = (0, -h)
     
     
-    p2_pos = (-x, -h)
 
     wr = "\n\t\t\t(rectangle"
-    wr += "\n\t\t\t\t(start " + p1_pos[0] + " " + p1_pos[1] + ")"
-    wr += "\n\t\t\t\t(end " + p2_pos[0] + " " + p2_pos[1] + ")"
+    wr += "\n\t\t\t\t(start " + str(p1_pos[0]) + " " + str(p1_pos[1]) + ")"
+    wr += "\n\t\t\t\t(end " + str(p2_pos[0]) + " " + str(p2_pos[1]) + ")"
     wr += "\n\t\t\t\t(stroke"
     wr += "\n\t\t\t\t\t(width 0)"
     wr += "\n\t\t\t\t\t(type default)"
@@ -263,13 +279,13 @@ def create_square(pin):
 
     return wr
 
-def create_text(text):
-    pos = (a,b)
+# def create_text(text):
+#     pos = (a,b)
 
-    wr = "(text \""+ text + "\" (at " + pos[0] + " " + pos[1] + " 0)\n\
-                (effects (font (size 1.27 1.27)))\n      )"
+#     wr = "(text \""+ text + "\" (at " + pos[0] + " " + pos[1] + " 0)\n\
+#                 (effects (font (size 1.27 1.27)))\n      )"
     
-    return wr
+#     return wr
 
 if __name__=="__main__":
     files = os.listdir('./chips/zupall')
