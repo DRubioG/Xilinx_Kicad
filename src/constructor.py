@@ -126,7 +126,6 @@ def listado(pines):
             pin_bank3.append(i)
     
     return pin_bank3
-    # return lista, capas
 
 
 
@@ -175,14 +174,14 @@ def create_pin(pin_list):
         wr += "\n\t\t\t(pin " 
         #tipo de pin
         for b in bidirec:
-            if pin[1][:len(b)] == b:
+            if pin[1].find(b) != -1: #   [:len(b)] == b:
                 tipo = "bidirectional"
         for p in power:
-            if pin[1][:len(p)] == p:
+            if pin[1].find(p) != -1: #[:len(p)] == p:
                 tipo = "power_in"
-        for o in power:
-            if pin[1][:len(o)] == o:
-                tipo = "power_in"
+        for o in output:
+            if pin[1].find(o) != -1: #[:len(o)] == o:
+                tipo = "output"
         if pin[1] == "NC":
             tipo = "no_connect"
         wr += tipo 
@@ -204,7 +203,7 @@ def create_pin(pin_list):
         else:
             dir = 180
         wr += " line"
-        wr += "\n\t\t\t\t(at " + str(10) + " " + str(pos_y) + " " + str(dir) + ")"
+        wr += "\n\t\t\t\t(at " + str(10+1.27*4) + " " + str(pos_y) + " " + str(dir) + ")"
         wr += "\n\t\t\t\t(length " +  str(1.27*4) +")\n"
         #nombre
         wr += "\n\t\t\t\t(name \"" + name + "\""
@@ -262,8 +261,6 @@ def create_square(pin):
         p2_pos = (-x, -h)
     else:
         p2_pos = (0, -h)
-    
-    
 
     wr = "\n\t\t\t(rectangle"
     wr += "\n\t\t\t\t(start " + str(p1_pos[0]) + " " + str(p1_pos[1]) + ")"
@@ -362,8 +359,6 @@ if __name__=="__main__":
         wr += "\n\t\t\t)"
         wr += "\n\t\t)"
         
-        
-
         wr += generador(lista, name)
         wr += "  )\n"
         cont += 1
