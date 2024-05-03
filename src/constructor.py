@@ -114,7 +114,7 @@ def listado(pines):
     pin_gnd = []
     for i in pin_bank2:
         if i[0][1][:3] == "GND":
-            if len(i) > 100:
+            if len(i) >= 100:
                 for t in i:
                     pin_gnd.append(t)
                     if len(pin_gnd) == 100:
@@ -139,13 +139,9 @@ def generador(pins, name):
         wr += "\n\t\t(symbol \"" + name + "_" + str(cont) + "_1\""
         # agregar rectangulo
         wr += create_square(pin)
-
         # agregar pines
         wr += create_pin(pin)
-
-
         wr += "\n\t\t)"
-
     return wr
 
 
@@ -164,7 +160,7 @@ def create_pin(pin_list):
     cont = 0
     wr = ""
     lon = len(pin_list)
-    if lon > 20:
+    if lon > 40:
         mitad = 1
 
     for pin in pin_list:
@@ -187,15 +183,12 @@ def create_pin(pin_list):
         wr += tipo 
         #posicion
         if mitad == 1:
-            if cont < lon/2:
+            if cont <= lon/2:
                 pos_y = (lon/4 -1/2 - cont)*1.27*2
             else:
-                pos_y = (lon/4 -1/2 - (cont-lon/2))*1.27*2
+                pos_y = (lon/4 +1/2 - (cont-lon/2))*1.27*2
         else:
-            # if lon % 2 == 1:
-            #     pos_y = (int(lon/2) - int(cont))*1.27*2
-            # else:
-                pos_y = (lon/2 -1/2 - cont)*1.27*2
+            pos_y = (lon/2 -1/2 - cont)*1.27*2
 
         cont += 1
         if mitad == 1:
@@ -243,10 +236,10 @@ def create_square(pin):
         if rt > max:
             max = rt
 
-    if max < 19:
+    if max < 20:
         x = 10       # check this numbers
     else:
-        x = max    #check this numbers
+        x = 10    #check this numbers
     
     #calculo de la otra mitad, para añadir el otro lado
     lon = len(pin)/2   # encima/debajo cero
@@ -259,6 +252,7 @@ def create_square(pin):
         #     h = (lon+1)*1.27
         # else:
             h = (lon+1)*1.27
+
     else:
         # if lon % 2 == 0:
         #     h = (lon*2+1)*1.27
@@ -371,9 +365,9 @@ if __name__=="__main__":
         
         wr += generador(lista, name)
         wr += "  )\n"
-        cont += 1
-        if cont == 1:
-            break
+        # cont += 1
+        # if cont == 1:
+        #     break
         
     wr += ")"
     f.write(wr)
