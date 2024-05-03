@@ -397,7 +397,9 @@
     "pinned_footprint_libs": [
       "Package_Xilinx_Versal"
     ],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "Zynq_Ultrascale+"
+    ]
   },
   "meta": {
     "filename": "preuba.kicad_pro",

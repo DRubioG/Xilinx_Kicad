@@ -190,9 +190,12 @@ def create_pin(pin_list):
             if cont <= lon/2:
                 pos_y = (int(lon/4) - int(cont))*1.27*2
             else:
-                pos_y = (int(lon/4) - int(cont-lon/2))*1.27*2
+                pos_y = (int(lon/4)-1/2 - int(cont-lon/2))*1.27*2
         else:
-            pos_y = (int(lon/2) - int(cont))*1.27*2
+            if lon % 2 == 1:
+                pos_y = (int(lon/2) - int(cont))*1.27*2
+            else:
+                pos_y = (int(lon/2)-1/2 - int(cont))*1.27*2
 
         cont += 1
         if mitad == 1:
@@ -229,7 +232,6 @@ def create_square(pin):
     crear rectangulo
     """
     max = 0
-
     # calculo del rectangulo
     #dimensiones
     for l in pin:
@@ -242,18 +244,19 @@ def create_square(pin):
     else:
         x = max    #check this numbers
     
-
     #calculo de la otra mitad, para añadir el otro lado
-    lon = int(len(pin)/2)   # encima/debajo cero
+    lon = len(pin)/2   # encima/debajo cero
     mitad = 0
-
     if lon >= 75:
         mitad = 1
 
     if mitad == 1:  #izda/dcha
-        h = int(lon/2)*100+200
+        h = (lon+2)*1.27
     else:
-        h = 20
+        if lon % 2 == 0:
+            h = (lon*2+1)*1.27
+        else:
+            h = (lon*2+1)*1.27
 
     # agregar rectangulo
     p1_pos = (x, h)
