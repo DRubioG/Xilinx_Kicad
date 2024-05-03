@@ -274,7 +274,7 @@ def create_square(pin):
     wr += "\n\t\t\t\t\t(type default)"
     wr += "\n\t\t\t\t)"
     wr += "\n\t\t\t\t(fill"
-    wr += "\n\t\t\t\t\t(type none)"
+    wr += "\n\t\t\t\t\t(type background)"
     wr += "\n\t\t\t\t)"
     wr += "\n\t\t\t)"
 
@@ -365,9 +365,9 @@ if __name__=="__main__":
         
         wr += generador(lista, name)
         wr += "  )\n"
-        # cont += 1
-        # if cont == 1:
-        #     break
+        cont += 1
+        if cont == 1:
+            break
         
     wr += ")"
     f.write(wr)
