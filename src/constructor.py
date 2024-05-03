@@ -187,26 +187,30 @@ def create_pin(pin_list):
         wr += tipo 
         #posicion
         if mitad == 1:
-            if cont <= lon/2:
-                pos_y = (int(lon/4) - int(cont))*1.27*2
+            if cont < lon/2:
+                pos_y = (lon/4 -1/2 - cont)*1.27*2
             else:
-                pos_y = (int(lon/4)-1/2 - int(cont-lon/2))*1.27*2
+                pos_y = (lon/4 -1/2 - (cont-lon/2))*1.27*2
         else:
-            if lon % 2 == 1:
-                pos_y = (int(lon/2) - int(cont))*1.27*2
-            else:
-                pos_y = (int(lon/2)-1/2 - int(cont))*1.27*2
+            # if lon % 2 == 1:
+            #     pos_y = (int(lon/2) - int(cont))*1.27*2
+            # else:
+                pos_y = (lon/2 -1/2 - cont)*1.27*2
 
         cont += 1
         if mitad == 1:
-            if cont <= lon:
+            if cont <= lon/2:
                 dir = 180
+                pos_x = 10+1.27*4
             else:
                 dir = 0
+                pos_x = "-" + str(10+1.27*4)
         else:
             dir = 180
+            pos_x = 10+1.27*4
+
         wr += " line"
-        wr += "\n\t\t\t\t(at " + str(10+1.27*4) + " " + str(pos_y) + " " + str(dir) + ")"
+        wr += "\n\t\t\t\t(at " + str(pos_x) + " " + str(pos_y) + " " + str(dir) + ")"
         wr += "\n\t\t\t\t(length " +  str(1.27*4) +")\n"
         #nombre
         wr += "\n\t\t\t\t(name \"" + name + "\""
@@ -247,15 +251,18 @@ def create_square(pin):
     #calculo de la otra mitad, para añadir el otro lado
     lon = len(pin)/2   # encima/debajo cero
     mitad = 0
-    if lon >= 75:
+    if lon >= 20:
         mitad = 1
 
     if mitad == 1:  #izda/dcha
-        h = (lon+2)*1.27
+        # if lon % 2 == 0:
+        #     h = (lon+1)*1.27
+        # else:
+            h = (lon+1)*1.27
     else:
-        if lon % 2 == 0:
-            h = (lon*2+1)*1.27
-        else:
+        # if lon % 2 == 0:
+        #     h = (lon*2+1)*1.27
+        # else:
             h = (lon*2+1)*1.27
 
     # agregar rectangulo
