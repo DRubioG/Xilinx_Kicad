@@ -194,13 +194,13 @@ def create_pin(pin_list):
         if mitad == 1:
             if cont <= lon/2:
                 dir = 180
-                pos_x = 10+1.27*4
+                pos_x = (10+2)*1.27
             else:
                 dir = 0
-                pos_x = "-" + str(10+1.27*4)
+                pos_x = "-" + str((10+2)*1.27)
         else:
             dir = 180
-            pos_x = 10+1.27*4
+            pos_x = (10+2)*1.27
 
         wr += " line"
         wr += "\n\t\t\t\t(at " + str(pos_x) + " " + str(pos_y) + " " + str(dir) + ")"
@@ -237,9 +237,9 @@ def create_square(pin):
             max = rt
 
     if max < 20:
-        x = 10       # check this numbers
+        x = (10-2)*1.27       # check this numbers
     else:
-        x = 10    #check this numbers
+        x = (10-2)*1.27    #check this numbers
     
     #calculo de la otra mitad, para añadir el otro lado
     lon = len(pin)/2   # encima/debajo cero
